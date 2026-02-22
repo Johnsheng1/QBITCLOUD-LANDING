@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sakura: #FFB7C5;
+  --color-sakura-light: #FFD1DC;
+  --color-sakura-dark: #E75480;
+  
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+}
+
+@layer base {
+  body {
+    @apply font-sans;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+.sakura-gradient {
+  background: linear-gradient(135deg, var(--color-sakura) 0%, var(--color-sakura-dark) 100%);
+}
+
+.sakura-text-gradient {
+  background: linear-gradient(135deg, var(--color-sakura) 0%, var(--color-sakura-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(10deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
