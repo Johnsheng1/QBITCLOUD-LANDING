@@ -1,4 +1,4 @@
-nAame: Build and Release Next.js (Standalone & Static)
+name: Build and Release Next.js (Standalone & Static)
 
 on:
   push:
