@@ -79,6 +79,7 @@ export const translations = {
         docs: '文档中心',
         api: 'API 参考',
         sla: '服务等级协议',
+        status: '可用性监控',
       }
     }
   },
@@ -160,6 +161,7 @@ export const translations = {
         docs: 'Documentation',
         api: 'API Reference',
         sla: 'SLA',
+        status: 'Availability',
       }
     }
   },
@@ -241,6 +243,7 @@ export const translations = {
         docs: 'ドキュメントセンター',
         api: 'API リファレンス',
         sla: 'サービスレベル契約 (SLA)',
+        status: '稼働状況',
       }
     }
   }
