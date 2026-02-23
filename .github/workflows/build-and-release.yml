@@ -1,0 +1,85 @@
+nAame: Build and Release Next.js (Standalone & Static)
+
+on:
+  push:
+    branches:
+      - main  # 如果你的主分支不叫 main，请修改
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # ======== 第一阶段：构建并打包 Standalone (Node.js) 版本 ========
+      - name: Build Standalone Next.js project
+        run: npm run build
+
+      - name: Zip Standalone build output
+        run: |
+          # 按照 Next.js 官方文档要求，将静态资源复制进 standalone 目录
+          cp -r public .next/standalone/ || true
+          cp -r .next/static .next/standalone/.next/
+          
+          # 进入 standalone 进行 zip 打包
+          cd .next/standalone
+          zip -r ../../nextjs-standalone.zip .
+          cd ../../
+
+      # ======== 第二阶段：修改配置，构建并打包 Static (纯静态) 版本 ========
+      - name: Modify next.config.ts for Static Export
+        run: |
+          # 1. 使用 sed 命令将 output: 'standalone' 替换为 output: 'export'
+          sed -i "s/output: 'standalone'/output: 'export'/g" next.config.ts
+          
+          # 2. 静态导出不支持内置的图片动态优化，注入 unoptimized: true
+          sed -i "s/images: {/images: { unoptimized: true,/g" next.config.ts
+          
+          # （可选）打印修改后的配置文件，方便你在 Action 日志里排查
+          echo "--- Modified next.config.ts ---"
+          cat next.config.ts
+          
+          # 3. 删除前一次构建的 .next 缓存文件夹，防止两次构建冲突
+          rm -rf .next
+
+      - name: Build Static Next.js project
+        run: npm run build
+
+      - name: Zip Static build output
+        run: |
+          # 第二次构建会输出 out 目录，进入 out 目录打包
+          cd out
+          zip -r ../nextjs-static.zip .
+          cd ..
+
+      # ======== 第三阶段：生成 Tag，创建 Release 并上传两个附件 ========
+      - name: Generate Release Tag
+        id: generate_tag
+        run: |
+          echo "tag=build-$(date +'%Y%m%d%H%M%S')-${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.generate_tag.outputs.tag }}
+          name: Release ${{ steps.generate_tag.outputs.tag }}
+          # 同时上传两个 zip 文件
+          files: |
+            nextjs-standalone.zip
+            nextjs-static.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
