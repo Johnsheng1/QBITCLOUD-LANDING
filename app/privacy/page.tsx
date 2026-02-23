@@ -1,8 +1,13 @@
+'use client';
+
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SakuraBackground from '@/components/SakuraBackground';
+import { useLanguage } from '@/lib/i18n';
 
 export default function PrivacyPage() {
+  const { t } = useLanguage();
+
   return (
     <main className="relative min-h-screen">
       <SakuraBackground />
@@ -11,7 +16,7 @@ export default function PrivacyPage() {
       <div className="pt-32 pb-24 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
-            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">隐私政策</h1>
+            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">{t.footer.privacy}</h1>
             <p className="text-zinc-500 dark:text-zinc-400">最后更新日期：2026年2月22日</p>
           </div>
 
@@ -55,7 +60,7 @@ export default function PrivacyPage() {
 
             <section>
               <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">4. 数据安全</h2>
-              <p>我们采取合理的物理、电子及管理措施来保护您的信息免遭未经授权的访问、使用或披露。然而，互联网上的传输并非百分之百安全，我们无法保证绝对的安全性。</p>
+              <p>我们采取合理的物理、电子及管理措施来保护您的信息免遭未经授权的访问、使用 or 披露。然而，互联网上的传输并非百分之百安全，我们无法保证绝对的安全性。</p>
             </section>
 
             <section>

@@ -1,8 +1,13 @@
+'use client';
+
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SakuraBackground from '@/components/SakuraBackground';
+import { useLanguage } from '@/lib/i18n';
 
 export default function ToSPage() {
+  const { t } = useLanguage();
+
   return (
     <main className="relative min-h-screen">
       <SakuraBackground />
@@ -11,7 +16,7 @@ export default function ToSPage() {
       <div className="pt-32 pb-24 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
-            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">服务条款</h1>
+            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">{t.footer.tos}</h1>
             <p className="text-zinc-500 dark:text-zinc-400">最后更新日期：2026年2月22日</p>
           </div>
 
