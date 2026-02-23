@@ -1,12 +1,10 @@
-name: Build and Release Next.js Static Site
+name: Build and Release Next.js App
 
-# 触发条件：每次 push 到 main 分支时触发
 on:
   push:
     branches:
-      - main  # 如果你的主分支叫 master，请将其改为 master
+      - main
 
-# 必须赋予 GitHub Token 创建 Release 的写权限
 permissions:
   contents: write
 
@@ -15,45 +13,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 从 GitHub 仓库拉取代码
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. 设置 Node.js 环境
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # 你可以根据你的项目修改 Node 版本
+          node-version: '20'
 
-      # 3. 安装依赖 (如果你使用的是 yarn 或 pnpm，请修改此步)
       - name: Install dependencies
-        run: npm ci # 如果你的项目没有 package-lock.json，可以换成 npm install
+        run: npm ci
 
-      # 4. 构建 Next.js 项目
       - name: Build Next.js project
         run: npm run build
 
-      # 5. 将构建产物（out 目录）打包成 zip
+      # 【关键修改】：打包 standalone 目录，而不是 out 目录
       - name: Zip build output
         run: |
-          # 进入 out 目录打包，这样解压时不会额外多出一层 out 文件夹
-          cd out
-          zip -r ../nextjs-static-site.zip .
-          cd ..
+          # 按照 Next.js 官方文档要求，手动把公共静态文件和构建好的 JS/CSS 复制进 standalone 里面
+          cp -r public .next/standalone/ || true
+          cp -r .next/static .next/standalone/.next/
+          
+          # 进入 standalone 目录进行 zip 打包
+          cd .next/standalone
+          zip -r ../../nextjs-release.zip .
+          cd ../../
 
-      # 6. 动态生成一个 Release Tag (使用时间戳+Commit哈希的前7位，避免重复冲突)
       - name: Generate Release Tag
         id: generate_tag
         run: |
           echo "tag=build-$(date +'%Y%m%d%H%M%S')-${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
 
-      # 7. 创建 GitHub Release 并上传 zip 附件
       - name: Create Release and Upload Asset
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.generate_tag.outputs.tag }}
           name: Release ${{ steps.generate_tag.outputs.tag }}
-          files: nextjs-static-site.zip
-          generate_release_notes: true # 自动生成 release 描述
+          files: nextjs-release.zip
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
