@@ -5,6 +5,40 @@ import { ArrowRight, ChevronRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n';
 
+const TypewriterText = ({ text, className, delay = 0, gradient = false }: { text: string, className?: string, delay?: number, gradient?: boolean }) => {
+  const characters = text.split("");
+  
+  return (
+    <motion.span
+      initial="hidden"
+      animate="visible"
+      variants={{
+        visible: {
+          transition: {
+            staggerChildren: 0.08,
+            delayChildren: delay,
+          }
+        }
+      }}
+      className={className}
+    >
+      {characters.map((char, index) => (
+        <motion.span
+          key={index}
+          variants={{
+            hidden: { opacity: 0, filter: 'blur(8px)', y: 5 },
+            visible: { opacity: 1, filter: 'blur(0px)', y: 0 }
+          }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className={gradient ? "sakura-text-gradient inline-block" : "inline-block"}
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+};
+
 export default function Hero() {
   const { t } = useLanguage();
 
@@ -25,20 +59,15 @@ export default function Hero() {
           <span>{t.hero.badge}</span>
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-6xl md:text-8xl font-display font-bold tracking-tight mb-8"
-        >
-          {t.hero.title_prefix}<br />
-          <span className="sakura-text-gradient">{t.hero.title_suffix}</span>
-        </motion.h1>
+        <h1 className="text-6xl md:text-8xl font-display font-bold tracking-tight mb-8 leading-[1.1]">
+          <TypewriterText text={t.hero.title_prefix} delay={0.2} /><br />
+          <TypewriterText text={t.hero.title_suffix} delay={0.8} gradient />
+        </h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8, delay: 1.5 }}
           className="max-w-2xl mx-auto text-lg md:text-xl text-zinc-600 dark:text-zinc-400 mb-12 leading-relaxed"
         >
           {t.hero.description}
@@ -47,7 +76,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 1.8 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <Link 
@@ -72,7 +101,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
+          transition={{ duration: 1, delay: 2.2 }}
           className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-zinc-200/20 dark:border-white/10 pt-12"
         >
           {[
