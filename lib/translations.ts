@@ -59,6 +59,16 @@ export const translations = {
         { name: '欧洲地区', cities: '伦敦、法兰克福、阿姆斯特丹' },
       ]
     },
+    faq: {
+      title: '常见问题',
+      subtitle: '为您解答关于 QBIT CLOUD 的常见疑问。',
+      items: [
+        { q: 'QBIT CLOUD 提供哪些支付方式？', a: '我们支持支付宝、微信支付、信用卡以及主流加密货币支付。' },
+        { q: '服务器开通需要多久？', a: '在您完成支付后，系统通常会在 1-5 分钟内自动完成实例部署并发送开通邮件。' },
+        { q: '支持退款吗？', a: '根据我们的服务条款，特价产品及已交付的云服务器通常不予退款，请在购买前仔细确认需求。' },
+        { q: '如何保证我的数据安全？', a: '我们采用多副本冗余存储技术，并提供自研 DDoS 防护系统。同时建议用户定期进行异地备份。' },
+      ]
+    },
     footer: {
       desc: 'QBIT CLOUD (丘比特云) 致力于为全球用户提供最优质的云计算基础设施服务。',
       products: '产品服务',
@@ -141,6 +151,16 @@ export const translations = {
         { name: 'Europe', cities: 'London, Frankfurt, Amsterdam' },
       ]
     },
+    faq: {
+      title: 'FAQ',
+      subtitle: 'Answering your common questions about QBIT CLOUD.',
+      items: [
+        { q: 'What payment methods do you support?', a: 'We support Alipay, WeChat Pay, Credit Cards, and major cryptocurrencies.' },
+        { q: 'How long does it take to deploy a server?', a: 'After payment, instances are usually deployed automatically within 1-5 minutes.' },
+        { q: 'Do you offer refunds?', a: 'Per our ToS, promotional items and delivered cloud servers are generally non-refundable.' },
+        { q: 'How is my data secured?', a: 'We use multi-replica redundant storage and self-developed DDoS protection. We also recommend regular off-site backups.' },
+      ]
+    },
     footer: {
       desc: 'QBIT CLOUD is dedicated to providing the highest quality cloud infrastructure services for global users.',
       products: 'Products',
@@ -221,6 +241,16 @@ export const translations = {
         { name: 'アジア太平洋', cities: '香港、東京、ソウル、シンガポール、台北' },
         { name: '北米', cities: 'ロサンゼルス、サンノゼ、シアトル、ニューヨーク' },
         { name: 'ヨーロッパ', cities: 'ロンドン、フランクフルト、アムステルダム' },
+      ]
+    },
+    faq: {
+      title: 'よくある質問',
+      subtitle: 'QBIT CLOUDに関する一般的な質問にお答えします。',
+      items: [
+        { q: 'どのような支払い方法がありますか？', a: 'アリペイ、WeChat Pay、クレジットカード、および主要な暗号資産に対応しています。' },
+        { q: 'サーバーの開通までどのくらいかかりますか？', a: 'お支払い完了後、通常1〜5分以内に自動的にデプロイされ、メールが送信されます。' },
+        { q: '返金は可能ですか？', a: '利用規約に基づき、セール品および納品済みのサーバーは原則として返金不可となります。' },
+        { q: 'データの安全性はどのように確保されていますか？', a: 'マルチレプリカ冗長ストレージと自社開発のDDoS防御システムを採用しています。定期的な外部バックアップも推奨しています。' },
       ]
     },
     footer: {
