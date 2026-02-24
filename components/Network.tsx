@@ -15,17 +15,37 @@ export default function Network() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-8">{t.network.title_prefix}<br /><span className="text-pink-400">{t.network.title_suffix}</span></h2>
-            <p className="text-zinc-400 text-lg mb-12 leading-relaxed">
+            <motion.h2 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="text-4xl md:text-5xl font-display font-bold mb-8"
+            >
+              {t.network.title_prefix}<br /><span className="text-pink-400">{t.network.title_suffix}</span>
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-zinc-400 text-lg mb-12 leading-relaxed"
+            >
               {t.network.description}
-            </p>
+            </motion.p>
             
             <div className="space-y-6">
-              {t.network.regions.map((item) => (
-                <div key={item.name} className="p-6 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors">
+              {t.network.regions.map((item, index) => (
+                <motion.div 
+                  key={item.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + index * 0.1 }}
+                  className="p-6 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors"
+                >
                   <div className="text-pink-400 font-bold mb-1">{item.name}</div>
                   <div className="text-zinc-300 text-sm">{item.cities}</div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

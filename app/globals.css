@@ -10,6 +10,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
     @apply font-sans;
   }
@@ -37,4 +41,15 @@
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, #FFB7C5, #E75480);
+  transform-origin: 0%;
+  z-index: 100;
 }
