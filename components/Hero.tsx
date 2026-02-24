@@ -1,10 +1,9 @@
 'use client';
 
-import { motion, useMotionValue, useTransform, animate, useInView } from 'motion/react';
+import { motion } from 'motion/react';
 import { ArrowRight, ChevronRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n';
-import { useEffect, useRef } from 'react';
 
 const TypewriterText = ({ text, className, delay = 0, gradient = false }: { text: string, className?: string, delay?: number, gradient?: boolean }) => {
   const characters = text.split("");
@@ -38,36 +37,6 @@ const TypewriterText = ({ text, className, delay = 0, gradient = false }: { text
       ))}
     </motion.span>
   );
-};
-
-const Counter = ({ value, delay = 0 }: { value: string, delay?: number }) => {
-  const count = useMotionValue(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  
-  const numericValue = parseFloat(value.replace(/[^0-9.]/g, ''));
-  const suffix = value.replace(/[0-9.]/g, '');
-  const isDecimal = value.includes('.');
-  
-  const displayValue = useTransform(count, (latest) => {
-    if (isDecimal) {
-      return latest.toFixed(2) + suffix;
-    }
-    return Math.floor(latest) + suffix;
-  });
-
-  useEffect(() => {
-    if (isInView) {
-      const controls = animate(count, numericValue, {
-        duration: 2,
-        delay: delay,
-        ease: [0.16, 1, 0.3, 1], // custom easeOutExpo
-      });
-      return controls.stop;
-    }
-  }, [isInView, count, numericValue, delay]);
-
-  return <motion.span ref={ref}>{displayValue}</motion.span>;
 };
 
 export default function Hero() {
@@ -140,10 +109,10 @@ export default function Hero() {
             { label: t.hero.stats.uptime, value: '99.99%' },
             { label: t.hero.stats.defense, value: '2Tbps+' },
             { label: t.hero.stats.users, value: '50k+' },
-          ].map((stat, index) => (
+          ].map((stat) => (
             <div key={stat.label}>
               <div className="text-3xl font-display font-bold mb-1">
-                <Counter value={stat.value} delay={2.2 + index * 0.1} />
+                {stat.value}
               </div>
               <div className="text-xs text-zinc-500 uppercase tracking-widest font-semibold">{stat.label}</div>
             </div>
